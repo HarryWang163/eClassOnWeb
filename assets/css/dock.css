@@ -8,6 +8,10 @@
   --hover-color: #0056b3;
   --icon-color: #5f6368;
   --icon-color-active: #ffffff;
+  --bs-brown-rgb: 139, 69, 19;    /* #8B4513 */
+  --bs-pink-rgb: 232, 62, 140;    /* #e83e8c */
+  --bs-orange-rgb: 253, 126, 20;  /* #fd7e14 */
+  --bs-brick-rgb: 178, 34, 34;    /* #B22222 */
 }
 
 .bi::before {
@@ -27,7 +31,7 @@
 .mac-dock {
   position: fixed;
   left: 0;
-  top: 50%;
+  top: 20%;
   transform: translateY(-50%);
   z-index: 1000;
   padding: 15px 10px;
@@ -217,4 +221,171 @@
 
 .dock-item:hover {
   animation: dockBounce 0.3s ease;
+}
+
+.subject-card {
+    transition: all 0.3s ease;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.subject-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.subject-card .card-header {
+    border-radius: 16px 16px 0 0 !important;
+    padding: 1.25rem;
+}
+
+.subject-card .card-body {
+    padding: 1.25rem;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.subject-card .card-footer {
+    padding: 0.75rem 1.25rem;
+}
+
+.subject-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.assignment-content ol {
+    padding-left: 1.5em;
+    margin-bottom: 0;
+}
+
+.assignment-content li {
+    line-height: 1.5;
+    padding-left: 0.25em;
+}
+
+/* 滚动条样式 */
+.subject-card .card-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.subject-card .card-body::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 3px;
+}
+
+.subject-card .card-body::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 3px;
+}
+
+.subject-card .card-body::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.25);
+}
+
+
+/* 棕色 - 地理 */
+.bg-brown { 
+    background-color: rgb(var(--bs-brown-rgb)) !important; 
+}
+.text-brown { 
+    color: rgb(var(--bs-brown-rgb)) !important; 
+}
+.border-brown { 
+    border-color: rgb(var(--bs-brown-rgb)) !important; 
+}
+
+/* 粉色 - 英语 */
+.bg-pink { 
+    background-color: rgb(var(--bs-pink-rgb)) !important; 
+}
+.text-pink { 
+    color: rgb(var(--bs-pink-rgb)) !important; 
+}
+.border-pink { 
+    border-color: rgb(var(--bs-pink-rgb)) !important; 
+}
+
+/* 橙色 - 数学 */
+.bg-orange { 
+    background-color: rgb(var(--bs-orange-rgb)) !important; 
+}
+.text-orange { 
+    color: rgb(var(--bs-orange-rgb)) !important; 
+}
+.border-orange { 
+    border-color: rgb(var(--bs-orange-rgb)) !important; 
+}
+
+/* 砖色 - 历史 */
+.bg-brick { 
+    background-color: rgb(var(--bs-brick-rgb)) !important; 
+}
+.text-brick { 
+    color: rgb(var(--bs-brick-rgb)) !important; 
+}
+.border-brick { 
+    border-color: rgb(var(--bs-brick-rgb)) !important; 
+}
+
+#subjectCardsContainer .subject-icon {
+    width: 40px !important;  /* 缩小图标容器 */
+    height: 40px !important;
+    padding: 0.4rem !important; /* 减小内边距 */
+}
+#subjectCardsContainer .subject-icon i {
+    font-size: 1.1rem !important; /* 相应调小图标 */
+}
+
+/* ============== 自定义颜色卡片增强样式 ============== */
+/* 地理卡片 - 棕色 */
+.subject-card.border-brown .card-header.bg-brown.bg-opacity-10 {
+    background-color: rgba(139, 69, 19, 0.1) !important;
+    border-color: rgba(139, 69, 19, 0.25) !important;
+}
+.subject-card.border-brown .subject-icon.bg-brown {
+    background-color: rgb(139, 69, 19) !important;
+}
+.subject-card.border-brown .badge.bg-brown {
+    background-color: rgb(139, 69, 19) !important;
+}
+
+/* 英语卡片 - 粉色 */
+.subject-card.border-pink .card-header.bg-pink.bg-opacity-10 {
+    background-color: rgba(232, 62, 140, 0.1) !important;
+    border-color: rgba(232, 62, 140, 0.25) !important;
+}
+.subject-card.border-pink .subject-icon.bg-pink {
+    background-color: rgb(232, 62, 140) !important;
+}
+.subject-card.border-pink .badge.bg-pink {
+    background-color: rgb(232, 62, 140) !important;
+}
+
+/* 数学卡片 - 橙色 */
+.subject-card.border-orange .card-header.bg-orange.bg-opacity-10 {
+    background-color: rgba(253, 126, 20, 0.1) !important;
+    border-color: rgba(253, 126, 20, 0.25) !important;
+}
+.subject-card.border-orange .subject-icon.bg-orange {
+    background-color: rgb(253, 126, 20) !important;
+}
+.subject-card.border-orange .badge.bg-orange {
+    background-color: rgb(253, 126, 20) !important;
+}
+
+/* 历史卡片 - 砖色 */
+.subject-card.border-brick .card-header.bg-brick.bg-opacity-10 {
+    background-color: rgba(178, 34, 34, 0.1) !important;
+    border-color: rgba(178, 34, 34, 0.25) !important;
+}
+.subject-card.border-brick .subject-icon.bg-brick {
+    background-color: rgb(178, 34, 34) !important;
+}
+.subject-card.border-brick .badge.bg-brick {
+    background-color: rgb(178, 34, 34) !important;
 }
