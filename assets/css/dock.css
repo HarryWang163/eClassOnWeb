@@ -1,11 +1,4 @@
 /* dock.css - 整合优化版 */
-/* 1. 核心图标字体声明 (关键！必须放在最前面) */
-@font-face {
-  font-display: block;
-  font-family: "bootstrap-icons";
-  src: url("../fonts/bootstrap-icons.woff2") format("woff2"),
-       url("../fonts/bootstrap-icons.woff") format("woff");
-}
 
 /* 2. 基础变量与重置 */
 :root {
@@ -225,22 +218,3 @@
 .dock-item:hover {
   animation: dockBounce 0.3s ease;
 }
-
-/* 10. 你Dock中实际使用的图标定义 (务必保留) */
-.bi-people-fill::before { content: "\f4d0"; }
-.bi-speedometer2::before { content: "\f57a"; }
-.bi-journal-text::before { content: "\f453"; }
-.bi-megaphone::before { content: "\f45e"; }
-.bi-archive::before { content: "\f10c"; }
-.bi-person-circle::before { content: "\f4d1"; }
-.bi-box-arrow-right::before { content: "\f138"; }
-.bi-plus-circle::before { content: "\f4fe"; }
-.bi-bell::before { content: "\f424"; }
-.bi-sunrise::before { content: "\f586"; }
-.bi-clock-history::before { content: "\f42c"; }
-.bi-calendar-event::before { content: "\f131"; }
-.bi-exclamation-triangle::before { content: "\f33b"; }
-.bi-credit-card::before { content: "\f23f"; }
-.bi-house-door::before { content: "\f454"; }
-.bi-check-circle-fill::before { content: "\f26a"; }
-/* 可根据需要继续添加其他图标 */
