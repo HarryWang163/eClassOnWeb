@@ -15,6 +15,34 @@ $stmt = $db->prepare("SELECT * FROM users WHERE id = ?");
 $stmt->execute([$user_id]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
+// 获取用户的标签信息（包括标签类型和颜色）
+$stmt_tags = $db->prepare("
+    SELECT 
+        t.id,
+        t.tag_name,
+        t.color,
+        t.description,
+        tt.type_name,
+        tt.sort_order
+    FROM user_tags ut
+    JOIN tags t ON ut.tag_id = t.id
+    JOIN tag_types tt ON t.tag_type_id = tt.id
+    WHERE ut.user_id = ?
+    ORDER BY tt.sort_order, t.tag_name
+");
+$stmt_tags->execute([$user_id]);
+$user_tags = $stmt_tags->fetchAll(PDO::FETCH_ASSOC);
+
+// 按标签类型分组
+$grouped_tags = [];
+foreach ($user_tags as $tag) {
+    $type_name = $tag['type_name'];
+    if (!isset($grouped_tags[$type_name])) {
+        $grouped_tags[$type_name] = [];
+    }
+    $grouped_tags[$type_name][] = $tag;
+}
+
 // 智能时间问候
 $hour = date('H');
 if ($hour < 6) {
@@ -29,6 +57,7 @@ if ($hour < 6) {
     $greeting = '晚上好';
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -337,6 +366,56 @@ if ($hour < 6) {
                 font-size: 1.5rem;
             }
         }
+        /* 个人资料页面样式优化 */
+.badge-pill {
+    border-radius: 20px;
+    padding: 0.5em 0.9em;
+    font-weight: 500;
+    font-size: 0.85rem;
+}
+
+.badge-pill:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: all 0.2s ease;
+}
+
+.tag-type-header {
+    border-left: 3px solid var(--primary-color);
+    padding-left: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
+.activity-timeline .timeline-item {
+    position: relative;
+    padding-left: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.activity-timeline .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+}
+
+.activity-timeline .timeline-item::after {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 12px;
+    width: 2px;
+    height: calc(100% + 1.5rem);
+    background-color: #dee2e6;
+}
+
+.activity-timeline .timeline-item:last-child::after {
+    display: none;
+}
     </style>
 </head>
 <body>
@@ -494,6 +573,40 @@ if ($hour < 6) {
 
     <!-- JavaScript -->
     <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script>
+// 将PHP变量传递给JavaScript
+const user = <?php echo json_encode($user); ?>;
+const grouped_tags = <?php echo json_encode($grouped_tags); ?>;
+const user_tags = <?php echo json_encode($user_tags); ?>;
+
+document.addEventListener('DOMContentLoaded', function() {
+    // 原有的JavaScript代码...
+    
+    // 页面内容定义（修改profile部分为动态生成）
+    const pageContents = {
+        'dashboard': `
+            <!-- 保持原有dashboard内容不变 -->
+        `,
+        'assignments': `
+            <!-- 保持原有assignments内容不变 -->
+        `,
+        'notices': `
+            <!-- 保持原有notices内容不变 -->
+        `,
+        'archive': `
+            <!-- 保持原有archive内容不变 -->
+        `,
+        'profile': generateProfileContent()
+    };
+    
+    // 生成个人资料页面内容的函数
+    function generateProfileContent() {
+        // 这里放入上面定义的profile页面内容
+        // 为了简洁，实际代码中可以直接调用上面定义的字符串
+        return `...上面定义的profile页面HTML...`;
+    }
+});
+</script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const dockItems = document.querySelectorAll('.dock-item:not(.dock-logo)');
@@ -902,41 +1015,180 @@ if ($hour < 6) {
                     </div>
                 `,
                 'profile': `
+    <div class="row">
+        <div class="col-lg-4 animate-fade-in-up">
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body text-center p-4">
+                    <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex p-4 mb-3">
+                        <i class="bi bi-person-badge text-primary fs-1"></i>
+                    </div>
+                    <h4 class="mb-1">${user.real_name}</h4>
+                    <p class="text-muted mb-3">@${user.username}</p>
+                    
+                    <!-- 用户ID和注册时间 -->
+                    <div class="bg-light rounded-3 p-3 mb-3 text-start">
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="bi bi-person-badge text-muted me-2"></i>
+                            <span class="text-muted small">用户ID：</span>
+                            <span class="ms-auto fw-bold">${user.id}</span>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-calendar-plus text-muted me-2"></i>
+                            <span class="text-muted small">注册时间：</span>
+                            <span class="ms-auto">${formatDateTime(user.created_at)}</span>
+                        </div>
+                        ${user.updated_at && user.updated_at !== user.created_at ? `
+                        <div class="d-flex align-items-center mt-2">
+                            <i class="bi bi-calendar-check text-muted me-2"></i>
+                            <span class="text-muted small">最后更新：</span>
+                            <span class="ms-auto">${formatDateTime(user.updated_at)}</span>
+                        </div>
+                        ` : ''}
+                    </div>
+                    
+                    <!-- 学号信息 -->
+                    ${user.student_number ? `
+                    <div class="bg-light rounded-3 p-3 mb-3">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-credit-card-2-front text-muted me-2"></i>
+                            <span class="text-muted small">学号：</span>
+                            <span class="ms-auto fw-bold">${user.student_number}</span>
+                        </div>
+                    </div>
+                    ` : ''}
+                    
+                    <!-- 账户状态 -->
+                    <div class="mt-4">
+                        <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-3 py-2 mb-2">
+                            <i class="bi bi-check-circle me-1"></i>账户正常
+                        </span>
+                        <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 px-3 py-2 mb-2">
+                            <i class="bi bi-clock-history me-1"></i>注册 ${getDaysSince(user.created_at)} 天
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-8">
+            <!-- 标签展示卡片 -->
+            <div class="card border-0 shadow-sm mb-4 animate-fade-in-up delay-1">
+                <div class="card-header bg-transparent border-0 pb-3">
+                    <h5 class="mb-0 d-flex align-items-center">
+                        <i class="bi bi-tags text-primary me-2"></i>
+                        我的标签
+                        <span class="badge bg-primary ms-2">${user_tags.length}</span>
+                    </h5>
+                    <p class="text-muted mb-0 small">这些标签定义了您在班级中的角色和属性</p>
+                </div>
+                <div class="card-body">
+                    ${Object.keys(grouped_tags).length > 0 ? 
+                        Object.entries(grouped_tags).map(([type_name, tags], type_index) => `
+                        <div class="mb-${type_index < Object.keys(grouped_tags).length - 1 ? '4' : '0'}">
+                            <h6 class="text-muted mb-2">${type_name}</h6>
+                            <div class="d-flex flex-wrap gap-2 mb-3">
+                                ${tags.map(tag => `
+                                <span class="badge rounded-pill d-flex align-items-center" 
+                                      style="background-color: ${tag.color || '#6c757d'}; color: white;"
+                                      title="${tag.description || ''}">
+                                    ${tag.tag_name}
+                                    ${tag.description ? '<i class="bi bi-info-circle ms-1" style="font-size: 0.8rem;"></i>' : ''}
+                                </span>
+                                `).join('')}
+                            </div>
+                        </div>
+                        `).join('') 
+                        : 
+                        `<div class="text-center py-4">
+                            <div class="mb-3">
+                                <i class="bi bi-tag text-muted fs-1"></i>
+                            </div>
+                            <p class="text-muted mb-0">暂无标签</p>
+                            <small class="text-muted">请联系管理员为您添加标签</small>
+                        </div>`
+                    }
+                </div>
+            </div>
+            
+            <!-- 账户概览卡片 -->
+            <div class="card border-0 shadow-sm animate-fade-in-up delay-2">
+                <div class="card-header bg-transparent border-0 pb-3 d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5 class="mb-0 d-flex align-items-center">
+                            <i class="bi bi-person-lines-fill text-primary me-2"></i>
+                            账户概览
+                        </h5>
+                        <p class="text-muted mb-0 small">详细账户信息与活动记录</p>
+                    </div>
+                    <button class="btn btn-sm btn-outline-primary" onclick="alert('编辑功能开发中')">
+                        <i class="bi bi-pencil me-1"></i>编辑资料
+                    </button>
+                </div>
+                <div class="card-body">
                     <div class="row">
-                        <div class="col-lg-4 animate-fade-in-up">
-                            <div class="card border-0 shadow-sm mb-4">
-                                <div class="card-body text-center p-4">
-                                    <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex p-4 mb-3">
-                                        <i class="bi bi-person-badge text-primary fs-1"></i>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label text-muted small mb-1">用户名</label>
+                            <div class="form-control bg-light">@${user.username}</div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label text-muted small mb-1">真实姓名</label>
+                            <div class="form-control bg-light">${user.real_name}</div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label text-muted small mb-1">用户类型</label>
+                            <div class="form-control bg-light">
+                                ${user_tags.some(tag => tag.tag_type_id === 2) ? '教师/管理员' : '学生'}
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label text-muted small mb-1">账户状态</label>
+                            <div class="form-control bg-light d-flex align-items-center">
+                                <span class="badge bg-success me-2">正常</span>
+                                <span class="text-muted small">可正常使用所有功能</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 最近活动 -->
+                    <div class="mt-4">
+                        <h6 class="text-muted mb-3">最近活动</h6>
+                        <div class="list-group list-group-flush">
+                            <div class="list-group-item border-0 px-0 py-2">
+                                <div class="d-flex align-items-center">
+                                    <div class="bg-primary bg-opacity-10 rounded-circle p-2 me-3">
+                                        <i class="bi bi-box-arrow-in-right text-primary"></i>
                                     </div>
-                                    <h4 class="mb-1"><?php echo htmlspecialchars($user['real_name']); ?></h4>
-                                    <p class="text-muted mb-3">@<?php echo htmlspecialchars($user['username']); ?></p>
-                                    <div class="d-flex justify-content-center flex-wrap gap-2 mb-3">
-                                        <span class="badge bg-primary">学生</span>
-                                        <span class="badge bg-info">课代表</span>
-                                    </div>
-                                    <div class="text-start">
-                                        <p><i class="bi bi-envelope me-2 text-muted"></i> <?php echo htmlspecialchars($user['email'] ?? '未设置'); ?></p>
-                                        <?php if ($user['student_number']): ?>
-                                        <p><i class="bi bi-credit-card me-2 text-muted"></i> <?php echo htmlspecialchars($user['student_number']); ?></p>
-                                        <?php endif; ?>
-                                        <p><i class="bi bi-calendar3 me-2 text-muted"></i> 注册于：<?php echo date('Y年m月d日', strtotime($user['created_at'])); ?></p>
+                                    <div class="flex-grow-1">
+                                        <div class="d-flex justify-content-between">
+                                            <span>登录系统</span>
+                                            <small class="text-muted">刚刚</small>
+                                        </div>
+                                        <small class="text-muted">IP: 192.168.1.100</small>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-lg-8 animate-fade-in-up delay-2">
-                            <div class="card border-0 shadow-sm">
-                                <div class="card-header bg-transparent border-0">
-                                    <h5 class="mb-0">账户概览</h5>
-                                </div>
-                                <div class="card-body">
-                                    <p>个人中心功能开发中，更多设置选项即将上线...</p>
+                            <div class="list-group-item border-0 px-0 py-2">
+                                <div class="d-flex align-items-center">
+                                    <div class="bg-info bg-opacity-10 rounded-circle p-2 me-3">
+                                        <i class="bi bi-journal-text text-info"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <div class="d-flex justify-content-between">
+                                            <span>查看作业中心</span>
+                                            <small class="text-muted">5分钟前</small>
+                                        </div>
+                                        <small class="text-muted">浏览了9个学科</small>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                `
+                </div>
+            </div>
+        </div>
+    </div>
+`
+
             };
             
             dockItems.forEach(item => {
@@ -980,6 +1232,37 @@ if ($hour < 6) {
                 }
             });
         });
+
+        // 格式化日期时间函数
+function formatDateTime(datetimeStr) {
+    if (!datetimeStr) return '未知时间';
+    const date = new Date(datetimeStr);
+    const now = new Date();
+    
+    // 如果是今天
+    if (date.toDateString() === now.toDateString()) {
+        return `今天 ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
+    }
+    
+    // 如果是昨天
+    const yesterday = new Date(now);
+    yesterday.setDate(now.getDate() - 1);
+    if (date.toDateString() === yesterday.toDateString()) {
+        return `昨天 ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
+    }
+    
+    return `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
+}
+
+// 计算注册天数
+function getDaysSince(createdAt) {
+    if (!createdAt) return '未知';
+    const created = new Date(createdAt);
+    const now = new Date();
+    const diffTime = Math.abs(now - created);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays;
+}
     </script>
 </body>
 </html>
