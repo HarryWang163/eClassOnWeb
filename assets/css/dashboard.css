@@ -1,0 +1,345 @@
+/* dashboard.css - 主仪表板样式 */
+
+:root {
+    --dock-bg: rgba(255, 255, 255, 0.95);
+    --dock-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    --primary-color: #4a6bff;
+    --hover-color: #3a56d4;
+}
+
+body {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    min-height: 100vh;
+    overflow-x: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', sans-serif;
+}
+
+.main-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.content-area {
+    flex: 1;
+    margin-left: 100px;
+    padding: 2rem;
+    transition: all 0.3s ease;
+}
+
+/* ==================== 渐入动画 ==================== */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.animate-fade-in-up {
+    animation: fadeInUp 0.8s ease-out forwards;
+    opacity: 0;
+}
+
+.animate-fade-in-right {
+    animation: fadeInRight 0.8s ease-out forwards;
+    opacity: 0;
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
+    opacity: 0;
+}
+
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
+.delay-5 { animation-delay: 0.5s; }
+.delay-6 { animation-delay: 0.6s; }
+
+/* ==================== 顶部欢迎栏 ==================== */
+.welcome-card {
+    background: linear-gradient(135deg, #ffffff 0%, #fdfdfd 100%);
+    border-radius: 24px;
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.06);
+    padding: 2.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    margin-bottom: 2.5rem;
+    opacity: 0; /* 初始透明，由动画控制显示 */
+}
+
+/* ==================== 右侧统计面板 ==================== */
+.stats-panel {
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 18px;
+    padding: 1.5rem;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+    height: 100%;
+}
+
+.stat-card {
+    padding: 1.25rem;
+    border-radius: 14px;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card:last-child {
+    margin-bottom: 0;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    border-radius: 4px 0 0 4px;
+}
+
+.stat-card-primary::before { background-color: var(--primary-color); }
+.stat-card-success::before { background-color: #20c997; }
+.stat-card-info::before { background-color: #17a2b8; }
+
+.stat-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.stat-numbers {
+    text-align: left;
+}
+
+.stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.stat-card-primary .stat-icon {
+    background-color: rgba(74, 107, 255, 0.1);
+    color: var(--primary-color);
+}
+
+.stat-card-success .stat-icon {
+    background-color: rgba(32, 201, 151, 0.1);
+    color: #20c997;
+}
+
+.stat-card-info .stat-icon {
+    background-color: rgba(23, 162, 184, 0.1);
+    color: #17a2b8;
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 0.25rem;
+}
+
+.stat-label {
+    font-size: 0.875rem;
+    color: #6c757d;
+    font-weight: 500;
+}
+
+/* ==================== 徽章样式 ==================== */
+.badge-pill {
+    border-radius: 20px;
+    padding: 0.35em 0.9em;
+    font-weight: 500;
+}
+
+/* ==================== 作业卡片样式 ==================== */
+.subject-card {
+    transition: all 0.3s ease;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.subject-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.subject-card .card-header {
+    border-radius: 16px 16px 0 0 !important;
+    padding: 1.25rem;
+}
+
+.subject-card .card-body {
+    padding: 1.25rem;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.subject-card .card-footer {
+    padding: 0.75rem 1.25rem;
+}
+
+.subject-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.assignment-content ol {
+    padding-left: 1.5em;
+    margin-bottom: 0;
+}
+
+.assignment-content li {
+    line-height: 1.5;
+    padding-left: 0.25em;
+}
+
+/* 滚动条样式 */
+.subject-card .card-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.subject-card .card-body::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 3px;
+}
+
+.subject-card .card-body::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 3px;
+}
+
+.subject-card .card-body::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.25);
+}
+
+/* ==================== 个人资料页面样式优化 ==================== */
+.badge-pill {
+    border-radius: 20px;
+    padding: 0.5em 0.9em;
+    font-weight: 500;
+    font-size: 0.85rem;
+}
+
+.badge-pill:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: all 0.2s ease;
+}
+
+.tag-type-header {
+    border-left: 3px solid var(--primary-color);
+    padding-left: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
+.activity-timeline .timeline-item {
+    position: relative;
+    padding-left: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.activity-timeline .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+}
+
+.activity-timeline .timeline-item::after {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 12px;
+    width: 2px;
+    height: calc(100% + 1.5rem);
+    background-color: #dee2e6;
+}
+
+.activity-timeline .timeline-item:last-child::after {
+    display: none;
+}
+
+/* ==================== 响应式调整 ==================== */
+@media (max-width: 992px) {
+    .welcome-card {
+        padding: 2rem;
+    }
+    
+    .stats-panel {
+        padding: 1.25rem;
+    }
+    
+    .stat-card {
+        padding: 1rem;
+    }
+    
+    .stat-number {
+        font-size: 1.75rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .content-area {
+        margin-left: 0;
+        padding: 1.5rem;
+        padding-bottom: 100px;
+    }
+    
+    .welcome-card {
+        padding: 1.75rem;
+    }
+    
+    .stats-panel {
+        margin-top: 1.5rem;
+    }
+    
+    .stat-number {
+        font-size: 1.5rem;
+    }
+}
