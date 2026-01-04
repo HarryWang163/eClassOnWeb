@@ -731,3 +731,20 @@ function getDaysSince(createdAt) {
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     return diffDays;
 }
+
+// 处理移动端退出登录
+function handleMobileLogout() {
+    if (confirm('确定要退出 eClass 吗？')) {
+        // 显示加载状态
+        const mobileLogoutBtn = document.getElementById('mobileLogoutBtn');
+        if (mobileLogoutBtn) {
+            mobileLogoutBtn.disabled = true;
+            mobileLogoutBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>退出中...';
+        }
+        
+        // 跳转到退出页面
+        setTimeout(() => {
+            window.location.href = 'logout.php';
+        }, 500);
+    }
+}
