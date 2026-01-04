@@ -424,3 +424,323 @@ body {
         border-radius: 12px;
     }
 }
+
+/* 作业卡片样式增强 */
+.subject-card .assignment-content ul li {
+    transition: all 0.2s ease;
+    border-radius: 8px;
+}
+
+.subject-card .assignment-content ul li:hover {
+    background-color: rgba(0, 123, 255, 0.05) !important;
+    transform: translateX(2px);
+}
+
+/* 作业图标样式 */
+.btn-sm.btn-outline-info,
+.btn-sm.btn-outline-success {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    padding: 0;
+}
+
+/* 徽章样式优化 */
+.badge {
+    font-weight: 500;
+    font-size: 0.75rem;
+}
+
+.badge.bg-brick {
+    background-color: var(--bs-brick) !important;
+    color: white !important;
+}
+
+.badge.bg-orange {
+    background-color: var(--bs-orange) !important;
+    color: white !important;
+}
+
+.badge.bg-pink {
+    background-color: var(--bs-pink) !important;
+    color: white !important;
+}
+
+/* 筛选面板样式 */
+#filterPanel {
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 作业内容截断 */
+.assignment-content .text-truncate {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* 模态框内容样式 */
+#assignmentDetailContent .bg-light {
+    background-color: #f8f9fa !important;
+}
+
+#assignmentDetailContent .border {
+    border: 1px solid #dee2e6 !important;
+}
+
+/* 移动端优化 */
+@media (max-width: 768px) {
+    .subject-card .card-body {
+        max-height: 200px;
+        overflow-y: auto;
+    }
+    
+    .subject-card .assignment-content ul li {
+        padding: 0.5rem;
+    }
+    
+    .btn-sm.btn-outline-info,
+    .btn-sm.btn-outline-success {
+        width: 28px;
+        height: 28px;
+        font-size: 0.75rem;
+    }
+    
+    .badge {
+        font-size: 0.7rem;
+        padding: 0.25em 0.5em;
+    }
+}
+
+/* 学科颜色定义 */
+:root {
+    --bs-orange: #fd7e14;
+    --bs-pink: #e83e8c;
+    --bs-brown: #8B4513;
+    --bs-brick: #B22222;
+}
+
+/* 自定义颜色类 */
+.bg-orange {
+    background-color: var(--bs-orange) !important;
+}
+
+.bg-pink {
+    background-color: var(--bs-pink) !important;
+}
+
+.bg-brown {
+    background-color: var(--bs-brown) !important;
+}
+
+.bg-brick {
+    background-color: var(--bs-brick) !important;
+}
+
+.text-orange {
+    color: var(--bs-orange) !important;
+}
+
+.text-pink {
+    color: var(--bs-pink) !important;
+}
+
+.text-brown {
+    color: var(--bs-brown) !important;
+}
+
+.text-brick {
+    color: var(--bs-brick) !important;
+}
+
+.border-orange {
+    border-color: var(--bs-orange) !important;
+}
+
+.border-pink {
+    border-color: var(--bs-pink) !important;
+}
+
+.border-brown {
+    border-color: var(--bs-brown) !important;
+}
+
+.border-brick {
+    border-color: var(--bs-brick) !important;
+}
+
+/* 颜色透明度类 */
+.bg-orange.bg-opacity-10 {
+    background-color: rgba(253, 126, 20, 0.1) !important;
+}
+
+.bg-pink.bg-opacity-10 {
+    background-color: rgba(232, 62, 140, 0.1) !important;
+}
+
+.bg-brown.bg-opacity-10 {
+    background-color: rgba(139, 69, 19, 0.1) !important;
+}
+
+.bg-brick.bg-opacity-10 {
+    background-color: rgba(178, 34, 34, 0.1) !important;
+}
+
+/* 边框透明度类 */
+.border-orange.border-opacity-25 {
+    border-color: rgba(253, 126, 20, 0.25) !important;
+}
+
+.border-pink.border-opacity-25 {
+    border-color: rgba(232, 62, 140, 0.25) !important;
+}
+
+.border-brown.border-opacity-25 {
+    border-color: rgba(139, 69, 19, 0.25) !important;
+}
+
+.border-brick.border-opacity-25 {
+    border-color: rgba(178, 34, 34, 0.25) !important;
+}
+
+/* 作业卡片布局优化 */
+.subject-card {
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.subject-card .card-body {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+/* 大屏幕（xl及以上）布局 */
+@media (min-width: 1200px) {
+    .col-xl-6 .subject-card .card-body {
+        max-height: 350px;
+    }
+    
+    .col-xl-4 .subject-card .card-body {
+        max-height: 250px;
+    }
+}
+
+/* 中等屏幕（lg）布局 */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    .col-lg-6 .subject-card .card-body {
+        max-height: 300px;
+    }
+    
+    .col-lg-4 .subject-card .card-body {
+        max-height: 220px;
+    }
+}
+
+/* 小屏幕（md）布局 */
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .col-md-12 .subject-card .card-body {
+        max-height: 250px;
+    }
+    
+    .col-md-6 .subject-card .card-body {
+        max-height: 200px;
+    }
+}
+
+/* 超小屏幕（sm及以下）布局 */
+@media (max-width: 767.98px) {
+    .subject-card {
+        margin-bottom: 1rem;
+    }
+    
+    .subject-card .card-body {
+        max-height: 200px;
+    }
+    
+    .subject-card .subject-icon {
+        width: 36px;
+        height: 36px;
+        padding: 0.5rem;
+    }
+    
+    .subject-card .subject-icon i {
+        font-size: 1rem;
+    }
+}
+
+/* 卡片头部优化 */
+.card-header .subject-icon {
+    flex-shrink: 0;
+}
+
+.card-header h5 {
+    font-size: 1.1rem;
+}
+
+/* 作业项样式优化 */
+.assignment-content li {
+    border-left: 3px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.assignment-content li:hover {
+    border-left-color: var(--primary-color);
+    background-color: rgba(0, 123, 255, 0.05) !important;
+}
+
+/* 徽章组优化 */
+.d-flex.gap-2 {
+    gap: 0.5rem !important;
+}
+
+.d-flex.gap-1 {
+    gap: 0.25rem !important;
+}
+
+/* 按钮组优化 */
+.d-flex.flex-column.gap-1 {
+    gap: 0.25rem !important;
+}
+
+.btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+/* 卡片底部优化 */
+.card-footer {
+    font-size: 0.85rem;
+}
+
+/* 滚动条样式优化 */
+.subject-card .card-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.subject-card .card-body::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.subject-card .card-body::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px;
+}
+
+.subject-card .card-body::-webkit-scrollbar-thumb:hover {
+    background: #a1a1a1;
+}

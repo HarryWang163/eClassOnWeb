@@ -175,7 +175,12 @@ if ($hour < 6) {
     </div>
 
     <!-- 引入修改密码模态框 -->
-    <div id="passwordModalContainer" style="z-index: 1051; position: relative;"></div>
+    <div id="passwordModalContainer" style="z-index: 1051;"></div>
+
+    <!-- 作业详情模态框 -->
+    <div class="modal fade show" id="assignmentDetailModal" style="z-index: 1051;">
+
+    </div>
 
     <!-- JavaScript 文件 -->
     <script src="assets/js/bootstrap.bundle.min.js"></script>
