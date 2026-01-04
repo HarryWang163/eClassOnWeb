@@ -174,6 +174,9 @@ if ($hour < 6) {
         </div>
     </div>
 
+    <!-- 引入修改密码模态框 -->
+    <div id="passwordModalContainer" style="z-index: 1051; position: relative;"></div>
+
     <!-- JavaScript 文件 -->
     <script src="assets/js/bootstrap.bundle.min.js"></script>
     

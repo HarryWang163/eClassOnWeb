@@ -130,5 +130,58 @@
                 </div>
             </div>
         </div>
+        <!-- 在账户概览卡片后添加修改密码卡片 -->
+        <div class="card border-0 shadow-sm animate-fade-in-up delay-3 mt-4">
+            <div class="card-header bg-transparent border-0">
+                <h5 class="mb-0 d-flex align-items-center">
+                    <i class="bi bi-shield-lock text-primary me-2"></i>
+                    账户安全
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-center p-3 bg-light rounded-3">
+                            <div class="bg-warning bg-opacity-10 rounded-circle p-3 me-3">
+                                <i class="bi bi-key text-warning fs-4"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-1">登录密码</h6>
+                                <p class="text-muted small mb-0">最后一次修改：{last_password_change}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-center p-3 bg-light rounded-3">
+                            <div class="bg-info bg-opacity-10 rounded-circle p-3 me-3">
+                                <i class="bi bi-clock-history text-info fs-4"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-1">登录状态</h6>
+                                <p class="text-muted small mb-0">当前在线，IP: {current_ip}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 修改密码按钮 -->
+                <div class="mt-4">
+                    <button class="btn btn-primary" id="btnChangePassword">
+                        <i class="bi bi-key me-1"></i>修改密码
+                    </button>
+                    <button class="btn btn-outline-secondary ms-2" onclick="alert('更多安全设置开发中')">
+                        <i class="bi bi-gear me-1"></i>安全设置
+                    </button>
+                </div>
+                
+                <!-- 安全提示 -->
+                <div class="alert alert-warning mt-3 small">
+                    <i class="bi bi-exclamation-triangle me-2"></i>
+                    为保障账户安全，请定期修改密码，不要使用过于简单的密码。
+                </div>
+            </div>
+        </div>
+
+        
     </div>
 </div>
