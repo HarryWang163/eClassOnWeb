@@ -197,5 +197,11 @@ if ($hour < 6) {
     </script>
     
     <script src="assets/js/dashboard.js"></script>
+    <script src="assets/js/assignments.js"></script>
+    <script src="assets/js/profile.js"></script>
+    <script src="assets/js/password.js"></script>
+    <script src="assets/js/notice.js"></script>
+    <script src="assets/js/archive.js"></script>
+    <script src="assets/js/utils.js"></script>
 </body>
 </html>
