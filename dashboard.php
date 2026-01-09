@@ -182,6 +182,11 @@ if ($hour < 6) {
 
     </div>
 
+    <!-- 作业详情模态框 -->
+    <div class="modal fade show" id="editAssignmentModal" style="z-index: 1051;">
+
+    </div>
+
     <!-- JavaScript 文件 -->
     <script src="assets/js/bootstrap.bundle.min.js"></script>
     

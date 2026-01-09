@@ -9,7 +9,7 @@ async function loadProfileContent() {
         // 同时加载个人资料内容和密码模态框
         const [profileTemplate, modalTemplate] = await Promise.all([
             fetchTemplate('pages/profile_content.html'),
-            fetchTemplate('pages/password_modal.html')
+            fetchTemplate('modals/password_modal.html')
         ]);
         
         const html = populateProfileTemplate(profileTemplate);

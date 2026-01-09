@@ -11,67 +11,25 @@ $db = getDB();
 ?>
 <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
-        <h2 class="h4 fw-bold mb-0 animate-fade-in-up"><i class="bi bi-journal-bookmark-fill me-2"></i>作业中心</h2>
-        <p class="text-muted mb-0 animate-fade-in-up delay-1" id="assignmentsStats">正在加载统计信息...</p>
-    </div>
-    <div class="animate-fade-in-up delay-2">
-        <button class="btn btn-sm btn-outline-secondary me-2" id="filterBtn">
-            <i class="bi bi-filter"></i> 筛选
-        </button>
-        <button class="btn btn-sm btn-primary" id="btnNewAssignment">
-            <i class="bi bi-plus-circle me-1"></i>新建作业
-        </button>
-    </div>
-</div>
-
-<!-- 筛选面板 -->
-<div class="card border-0 shadow-sm mb-4 animate-fade-in-up delay-3" id="filterPanel" style="display: none;">
-    <div class="card-body">
-        <div class="row g-3">
-            <div class="col-md-4">
-                <label class="form-label small">学科筛选</label>
-                <select class="form-select form-select-sm" id="subjectFilter">
-                    <option value="all">所有学科</option>
-                    <?php
-                    $stmt = $db->query("SELECT * FROM subjects ORDER BY sort_order");
-                    $subjects = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                    foreach ($subjects as $subject) {
-                        echo '<option value="' . $subject['id'] . '">' . htmlspecialchars($subject['subject_name']) . '</option>';
-                    }
-                    ?>
-                </select>
-            </div>
-            <div class="col-md-4">
-                <label class="form-label small">状态筛选</label>
-                <select class="form-select form-select-sm" id="statusFilter">
-                    <option value="all">所有状态</option>
-                    <option value="need_submit">需要提交</option>
-                    <option value="urgent">紧急作业</option>
-                    <option value="important">重要作业</option>
-                </select>
-            </div>
-            <div class="col-md-4">
-                <label class="form-label small">截止时间</label>
-                <select class="form-select form-select-sm" id="deadlineFilter">
-                    <option value="all">所有时间</option>
-                    <option value="today">今日截止</option>
-                    <option value="tomorrow">明日截止</option>
-                    <option value="week">本周内</option>
-                </select>
-            </div>
-        </div>
-        <div class="mt-3 d-flex justify-content-between">
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="showDetailsOnly">
-                <label class="form-check-label small" for="showDetailsOnly">
-                    仅显示有详细信息的作业
-                </label>
-            </div>
-            <div>
-                <button class="btn btn-sm btn-outline-secondary" id="resetFilters">重置筛选</button>
-                <button class="btn btn-sm btn-primary ms-2" id="applyFilters">应用筛选</button>
-            </div>
-        </div>
+        <h2 class="h4 fw-bold mb-4 animate-fade-in-up"><i class="bi bi-journal-bookmark-fill me-2"></i>作业中心</h2>
+        <div class="col-md-6">
+                    <div class="d-flex align-items-center gap-2">
+                        <button class="btn btn-outline-primary" id="prevDateBtn" title="上一天">
+                            <i class="bi bi-chevron-left"></i>
+                        </button>
+                        <div class="input-group flex-nowrap">
+                            <span class="input-group-text"><i class="bi bi-calendar"></i></span>
+                            <input type="date" class="form-control" id="datePicker">
+                        </div>
+                        <button class="btn btn-outline-primary" id="nextDateBtn" title="下一天">
+                            <i class="bi bi-chevron-right"></i>
+                        </button>
+                        <button class="btn btn-primary" id="todayBtn" title="今天">
+                            <i class="bi bi-calendar-check"></i> 今天
+                        </button>
+                    </div>
+                </div>
+        <p class="text-muted mt-3 mb-0 animate-fade-in-up delay-1" id="assignmentsStats">正在加载统计信息...</p>
     </div>
 </div>
 
@@ -96,3 +54,44 @@ window.subjectsData = <?php
     echo json_encode($subjects);
 ?>;
 </script>
+
+<!-- 添加一些CSS样式 -->
+<style>
+    /* 日期选择器美化 */
+    .input-group-lg .input-group-text {
+        padding: 0.75rem 1rem;
+    }
+    
+    .input-group-lg .form-control {
+        padding: 0.75rem;
+        font-size: 1rem;
+    }
+    
+    /* 今天按钮样式 */
+    #todayBtn {
+        min-width: 100px;
+        font-weight: 500;
+    }
+    
+    /* 响应式调整 */
+    @media (max-width: 768px) {
+        .input-group-lg {
+            min-width: 100% !important;
+        }
+        
+        #todayBtn {
+            min-width: 80px;
+            padding: 0.75rem 1rem;
+        }
+        
+        .btn-group .btn {
+            padding: 0.75rem 1rem;
+        }
+    }
+    
+    /* 按钮悬停效果 */
+    .btn-outline-primary:hover {
+        background-color: var(--bs-primary);
+        color: white;
+    }
+</style>

@@ -438,6 +438,7 @@ body {
 
 /* 作业图标样式 */
 .btn-sm.btn-outline-info,
+.btn-sm.btn-outline-warning,
 .btn-sm.btn-outline-success {
     width: 32px;
     height: 32px;
