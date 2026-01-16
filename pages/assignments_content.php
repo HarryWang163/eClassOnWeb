@@ -12,7 +12,7 @@ $db = getDB();
 <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
         <h2 class="h4 fw-bold mb-4 animate-fade-in-up"><i class="bi bi-journal-bookmark-fill me-2"></i>作业中心</h2>
-        <div class="col-md-6">
+        <div class="d-flex flex-column flex-sm-row align-items-start align-items-sm-center gap-3 w-100 w-md-auto">
                     <div class="d-flex align-items-center gap-2">
                         <button class="btn btn-outline-primary" id="prevDateBtn" title="上一天">
                             <i class="bi bi-chevron-left"></i>
@@ -27,6 +27,10 @@ $db = getDB();
                         <button class="btn btn-primary" id="todayBtn" title="今天">
                             <i class="bi bi-calendar-check"></i> 今天
                         </button>
+                    </div>
+                    <!-- 课代表新建作业面板（右对齐） -->
+                    <div id="representativeNewAssignment" class="ms-auto order-0 order-sm-1">
+                        <!-- 加载中... -->
                     </div>
                 </div>
         <p class="text-muted mt-3 mb-0 animate-fade-in-up delay-1" id="assignmentsStats">正在加载统计信息...</p>

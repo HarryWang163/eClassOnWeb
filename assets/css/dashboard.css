@@ -55,17 +55,17 @@ body {
 }
 
 .animate-fade-in-up {
-    animation: fadeInUp 0.8s ease-out forwards;
+    animation: fadeInUp 0.5s ease-out forwards;
     opacity: 0;
 }
 
 .animate-fade-in-right {
-    animation: fadeInRight 0.8s ease-out forwards;
+    animation: fadeInRight 0.5s ease-out forwards;
     opacity: 0;
 }
 
 .animate-fade-in {
-    animation: fadeIn 0.8s ease-out forwards;
+    animation: fadeIn 0.5s ease-out forwards;
     opacity: 0;
 }
 
@@ -744,4 +744,117 @@ body {
 
 .subject-card .card-body::-webkit-scrollbar-thumb:hover {
     background: #a1a1a1;
+}
+
+/* 在 assignments_content.php 的 <style> 标签内添加 */
+/* 课代表新建作业面板样式 */
+#representativeNewAssignment {
+    transition: all 0.3s ease;
+}
+
+/* 按钮组样式 */
+#representativeNewAssignment .btn-group {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+#representativeNewAssignment .btn {
+    transition: all 0.2s ease;
+}
+
+#representativeNewAssignment .btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+/* 下拉选择框样式 */
+#newAssignmentSubjectSelect {
+    border-color: #28a745;
+}
+
+#newAssignmentSubjectSelect:focus {
+    border-color: #28a745;
+    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    #representativeNewAssignment {
+        order: -1;
+        margin-bottom: 1rem;
+        width: 100%;
+    }
+    
+    #representativeNewAssignment .d-flex {
+        justify-content: flex-end !important;
+    }
+    
+    #representativeNewAssignment select {
+        flex-grow: 1;
+        max-width: 200px;
+    }
+    
+    .btn-group .btn {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.875rem;
+    }
+}
+
+@media (min-width: 769px) {
+    #representativeNewAssignment {
+        margin-right: 1rem;
+    }
+}
+
+.bg-purple {
+    background-color: #9C27B0 !important;
+}
+
+.text-purple {
+    color: #9C27B0 !important;
+}
+
+.border-purple {
+    border-color: #9C27B0 !important;
+}
+
+.btn-purple {
+    background-color: #9C27B0;
+    border-color: #9C27B0;
+    color: white;
+}
+
+.btn-purple:hover {
+    background-color: #7B1FA2;
+    border-color: #7B1FA2;
+}
+
+.btn-outline-purple {
+    color: #9C27B0;
+    border-color: #9C27B0;
+}
+
+.btn-outline-purple:hover {
+    background-color: #9C27B0;
+    color: white;
+}
+
+/* 通知卡片特殊样式 */
+.subject-card.notice-card {
+    border-left: 4px solid #9C27B0;
+}
+
+.subject-card.notice-card .card-header {
+    background: linear-gradient(135deg, #9C27B0 0%, #E1BEE7 100%);
+    color: white;
+}
+
+.subject-card.notice-card .card-header .subject-icon {
+    background-color: white;
+    color: #9C27B0;
+}
+
+.subject-card.notice-card .badge.bg-purple {
+    background-color: rgba(156, 39, 176, 0.15) !important;
+    color: #9C27B0 !important;
+    border: 1px solid rgba(156, 39, 176, 0.3);
 }

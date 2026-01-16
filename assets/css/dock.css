@@ -389,3 +389,15 @@
 .subject-card.border-brick .badge.bg-brick {
     background-color: rgb(178, 34, 34) !important;
 }
+
+/* 通知卡片 - 紫色 */
+.subject-card.border-purple .card-header.bg-purple.bg-opacity-10 {
+    background-color: rgba(156, 39, 176, 0.1) !important;
+    border-color: rgba(156, 39, 176, 0.25) !important;
+}
+.subject-card.border-purple .subject-icon.bg-purple {
+    background-color: rgb(156, 39, 176) !important;
+}
+.subject-card.border-purple .badge.bg-purple {
+    background-color: rgb(156, 39, 176) !important;
+}

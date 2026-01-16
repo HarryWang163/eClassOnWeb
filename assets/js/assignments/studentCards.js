@@ -46,18 +46,18 @@ function renderSubjectCards() {
     }
     
     let html = '';
-    let animationDelay = 0.3;
+    let animationDelay = 0.2;
     
     // 第一行：语文和英语
     grouped.firstRow.forEach((subjectData, index) => {
-        html += renderSubjectCard(subjectData, 'col-xl-6 col-lg-6 col-md-12', index + 3);
-        animationDelay += 0.1;
+        html += renderSubjectCard(subjectData, 'col-xl-6 col-lg-6 col-md-12', 0);
+        animationDelay += 0.05;
     });
     
     // 其他行：每行3个
     grouped.otherRows.forEach((subjectData, index) => {
-        html += renderSubjectCard(subjectData, 'col-xl-4 col-lg-4 col-md-6', index + 3);
-        animationDelay += 0.1;
+        html += renderSubjectCard(subjectData, 'col-xl-4 col-lg-4 col-md-6', 0);
+        animationDelay += 0.05;
     });
     
     container.innerHTML = html;

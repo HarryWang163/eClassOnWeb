@@ -208,6 +208,7 @@ if ($hour < 6) {
     <script src="assets/js/assignments/datepicker.js"></script>
     <script src="assets/js/assignments/editAssignmentModal.js"></script>
     <script src="assets/js/assignments/studentCards.js"></script>
+    <script src="assets/js/assignments/representativeNewAssignmentPanel.js"></script>
     <script src="assets/js/profile.js"></script>
     <script src="assets/js/password.js"></script>
     <script src="assets/js/notice.js"></script>

@@ -14,6 +14,8 @@ function loadAssignmentsContent() {
             
             // 初始化作业页面
             initAssignmentsPage();
+
+            loadRepresentativeNewAssignmentPanel();
             
         })
         .catch(error => {

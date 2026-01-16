@@ -4,7 +4,7 @@ function getGroupedSubjectsByLayout() {
     if (!filteredAssignments) return { firstRow: [], otherRows: [] };
     
     const firstRowSubjects = ['语文', '英语'];
-    const otherSubjects = ['数学', '物理', '化学', '地理', '生物', '政治', '历史'];
+    const otherSubjects = ['数学', '物理', '化学', '地理', '生物', '政治', '历史', '通知'];
     
     const firstRowData = [];
     const otherRowsData = [];
@@ -60,7 +60,8 @@ function getColorClass(color) {
         '#8B4513': 'brown',      // 地理
         '#20c997': 'success',    // 生物
         '#dc3545': 'danger',     // 政治
-        '#B22222': 'brick'       // 历史
+        '#B22222': 'brick',       // 历史
+        '#9C27B0': 'purple' 
     };
     
     return colorMap[color] || 'primary';

@@ -14,7 +14,7 @@ function addAnimationClasses() {
             !el.classList.contains('animate-fade-in-right') && 
             !el.classList.contains('animate-fade-in')) {
             el.classList.add('animate-fade-in-up');
-            el.style.animationDelay = `${0.1 + (index * 0.05)}s`;
+            el.style.animationDelay = `${0.1 + (index * 0.01)}s`;
             el.style.opacity = '0';
         }
     });
