@@ -37,7 +37,7 @@ function findSubjectDataByName(subjectName) {
             // 检查是否有作业
             const hasAssignments = 
                 (subjectData.today_published && subjectData.today_published.length > 0) ||
-                (subjectData.today_due && subjectData.today_due.length > 0);
+                (subjectData.future_due && subjectData.future_due.length > 0);
             
             if (hasAssignments) {
                 return subjectData;

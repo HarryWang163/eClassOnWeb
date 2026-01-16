@@ -5,7 +5,6 @@
     <div class="card-body">
         <form id="assignmentForm" onsubmit="saveAssignment(event)">
             <input type="hidden" name="assignment_id" value="0">
-            
             <div class="mb-3">
                 <label for="assignmentContent" class="form-label">作业内容 <span class="text-danger">*</span></label>
                 <textarea class="form-control" id="assignmentContent" name="assignment_content" 
@@ -55,82 +54,3 @@
         </form>
     </div>
 </div>
-
-<script>
-// 表单交互逻辑
-document.addEventListener('DOMContentLoaded', function() {
-    // 需要提交复选框事件
-    const needSubmitCheckbox = document.getElementById('needSubmit');
-    const submitItemsInput = document.getElementById('submitItems');
-    
-    if (needSubmitCheckbox && submitItemsInput) {
-        needSubmitCheckbox.addEventListener('change', function() {
-            submitItemsInput.disabled = !this.checked;
-            if (!this.checked) {
-                submitItemsInput.value = '';
-            }
-        });
-    }
-    
-    // 详细说明复选框事件
-    const hasDetailsCheckbox = document.getElementById('hasDetails');
-    const detailsField = document.getElementById('detailsField');
-    
-    if (hasDetailsCheckbox && detailsField) {
-        hasDetailsCheckbox.addEventListener('change', function() {
-            detailsField.style.display = this.checked ? 'block' : 'none';
-            if (!this.checked) {
-                document.getElementById('assignmentDetails').value = '';
-            }
-        });
-    }
-});
-
-// 保存作业
-function saveAssignment(event) {
-    event.preventDefault();
-    
-    const form = event.target;
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData.entries());
-    
-    // 处理复选框值
-    data.need_submit = form.elements['need_submit'].checked ? 1 : 0;
-    data.has_details = form.elements['has_details'].checked ? 1 : 0;
-    
-    // 添加学科ID（需要从上下文获取）
-    const subjectId = getCurrentSubjectId(); // 需要实现此函数
-    
-    fetch('api/save_assignment.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data)
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            showSuccess('作业保存成功');
-            // 重新加载列表
-            loadSubjectAssignments(subjectId);
-            // 重置表单（如果是新建）
-            if (form.elements['assignment_id'].value === '0') {
-                form.reset();
-            }
-        } else {
-            showError('保存失败: ' + data.message);
-        }
-    })
-    .catch(error => {
-        console.error('保存作业失败:', error);
-        showError('保存失败，请检查网络连接');
-    });
-}
-
-// 取消表单
-function cancelForm() {
-    // 返回作业列表视图
-    loadSubjectAssignments(getCurrentSubjectId());
-}
-</script>

@@ -69,7 +69,6 @@ function renderSubjectCards() {
 function renderSubjectCard(subjectData, columnClass, animationDelayIndex) {
     const subject = subjectData.subject_info;
     const todayPublished = subjectData.today_published || [];
-    const todayDue = subjectData.today_due || [];
     const futureDue = subjectData.future_due || [];
     const stats = subjectData.stats;
     const isRepresentative = subjectData.is_representative || false;
@@ -99,7 +98,7 @@ function renderSubjectCard(subjectData, columnClass, animationDelayIndex) {
                         ` : ''}
                         
                         ${stats.need_submit_count > 0 ? `<span class="badge ${badgeClass}">${stats.need_submit_count}项需提交</span>` : ''}
-                        ${stats.completed_count > 0 ? `<span class="badge bg-success">${stats.completed_count}项已完成</span>` : ''}
+                        ${stats.not_completed_count > 0 ? `<span class="badge bg-warning">${stats.not_completed_count}项未完成</span>` : ''}
                         
                         <!-- 课代表编辑按钮（右上角） -->
                         ${isRepresentative ? `
@@ -116,19 +115,19 @@ function renderSubjectCard(subjectData, columnClass, animationDelayIndex) {
                         <!-- 今天发布的作业 -->
                         ${todayPublished.length > 0 ? `
                             <div class="mb-3">
-                                <h6 class="text-muted mb-2"><i class="bi bi-calendar-plus me-1"></i>今天发布</h6>
+                                <h6 class="text-muted mb-2"><i class="bi bi-calendar-plus me-1"></i>当天发布</h6>
                                 <ul class="mb-0 list-unstyled">
                                     ${todayPublished.map((assignment, idx) => renderAssignmentItem(assignment, idx, 'today_published')).join('')}
                                 </ul>
                             </div>
                         ` : ''}
                         
-                        <!-- 今天截止的作业 -->
-                        ${todayDue.length > 0 ? `
+                        <!-- 未截止的作业 -->
+                        ${futureDue.length > 0 ? `
                             <div class="mb-3">
-                                <h6 class="text-muted mb-2"><i class="bi bi-exclamation-triangle me-1"></i>今天截止</h6>
+                                <h6 class="text-muted mb-2"><i class="bi bi-exclamation-triangle me-1"></i>未截止</h6>
                                 <ul class="mb-0 list-unstyled">
-                                    ${todayDue.map((assignment, idx) => renderAssignmentItem(assignment, idx, 'today_due')).join('')}
+                                    ${futureDue.map((assignment, idx) => renderAssignmentItem(assignment, idx, 'future_due')).join('')}
                                 </ul>
                             </div>
                         ` : ''}

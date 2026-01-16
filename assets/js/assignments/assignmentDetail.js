@@ -6,10 +6,10 @@ async function showAssignmentDetail(assignmentId) {
     // 在所有学科中查找指定作业
     let assignment = null;
     assignmentsData.assignments.forEach(subjectData => {
-        const publishedToday = subjectData.published_today || [];
-        const notDue = subjectData.not_due || [];
-        const allAssignments = [...publishedToday, ...notDue];
-        
+        const today_published = subjectData.today_published || [];
+        const future_due = subjectData.future_due || [];
+        const allAssignments = [...today_published, ...future_due];
+
         const found = allAssignments.find(a => a.id === assignmentId);
         if (found) {
             assignment = found;

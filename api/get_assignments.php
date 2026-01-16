@@ -56,8 +56,7 @@ try {
             s.subject_name,
             CASE 
                 WHEN DATE(a.publish_time) = :selected_date THEN 'today_published'
-                WHEN a.deadline IS NOT NULL AND a.deadline = :selected_date2 THEN 'today_due'
-                WHEN a.deadline IS NOT NULL AND a.deadline > :selected_date3 THEN 'future_due'
+                WHEN a.deadline IS NOT NULL AND a.deadline >= :selected_date2 THEN 'future_due'
                 ELSE 'other'
             END as assignment_type,
             CASE 
@@ -83,7 +82,6 @@ try {
     $stmt = $db->prepare($query);
     $stmt->bindValue(':selected_date', $selected_date);
     $stmt->bindValue(':selected_date2', $selected_date);
-    $stmt->bindValue(':selected_date3', $selected_date);
     $stmt->bindValue(':selected_date4', $selected_date);
     $stmt->bindValue(':selected_date5', $selected_date);
     $stmt->bindValue(':selected_date6', $selected_date);
@@ -108,7 +106,6 @@ try {
         $groupedAssignments[$subjectId] = [
             'subject_info' => $subject,
             'today_published' => [],
-            'today_due' => [],
             'future_due' => [],
             'stats' => [
                 'total_assignments' => 0,
@@ -135,8 +132,6 @@ try {
         if (isset($groupedAssignments[$subjectId])) {
             if ($assignmentType === 'today_published') {
                 $groupedAssignments[$subjectId]['today_published'][] = $assignment;
-            } elseif ($assignmentType === 'today_due') {
-                $groupedAssignments[$subjectId]['today_due'][] = $assignment;
             } elseif ($assignmentType === 'future_due') {
                 $groupedAssignments[$subjectId]['future_due'][] = $assignment;
             }
@@ -149,9 +144,10 @@ try {
                 $groupedAssignments[$subjectId]['stats']['need_submit_count']++;
                 $total_need_submit++;
             }
-            
             if ($assignment['is_completed'] == 1) {
                 $groupedAssignments[$subjectId]['stats']['completed_count']++;
+            } else{
+                $groupedAssignments[$subjectId]['stats']['not_completed_count']++;
             }
             
             $subjects_stats[$subjectId]['total_assignments']++;
@@ -160,6 +156,8 @@ try {
             }
             if ($assignment['is_completed'] == 1) {
                 $subjects_stats[$subjectId]['completed_count']++;
+            } else{
+                $subjects_stats[$subjectId]['not_completed_count']++;
             }
         }
     }
@@ -167,7 +165,7 @@ try {
     // 过滤掉没有作业的学科
     $filteredGroupedAssignments = array_filter($groupedAssignments, function($subjectData) {
         return !empty($subjectData['today_published']) || 
-               !empty($subjectData['today_due']) || 
+
                !empty($subjectData['future_due']);
     });
     
